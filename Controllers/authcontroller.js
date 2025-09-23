@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 
 // Registering a new user as a customer
-const  register = async (req,res)  =>{
+const  register = async (req,res)  => {
     try{
         const {firstName,lastName,email,BVN,password,role} = req.body;
 
@@ -46,30 +46,34 @@ const login = async (req,res) => {
 const  {email,password} = req.body;
 
     // checking login credentils
-    if (!email || !password)
-    {
-        res.status(400).json({
-            success:false,
-            message:"invalid credentials"
 
-        })
-    }
 
-// find user and include password filed
-
-const user = await user.findOne({email}).select(("+password"));
+const user = await User.findOne({email}).select(("+password"));
 
 if (!user){
     return res.status(400).json({
         success:false,
-        message:"invalid credentials"
+        message:"user not found "
     });
 }
 
 
+
+    if (user.password !== password){
+       
+       return res.status(400).json({
+            success:false,
+            message:"invalid password"
+        })
+    }
+
+
+
+
+
 // generating jwt
 
- const token = jwt.sign({id: User._id, role: User.role}, "anewsecret", {expiresIn: '5h'})
+ const token = jwt.sign({id: user._id, role: user.role}, "anewsecret", {expiresIn: '5h'})
 
         return res.status(200).json({
             token
@@ -92,7 +96,7 @@ const prof = async (req, res) => {
     try{
         const id = req.user.id 
         
-        const user = await user.findByid(id).select("-password");// hide password
+        const user = await User.findByid(id).select("-password");// hide password
 if (!user){
     
     return res.status(400).json({

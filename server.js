@@ -4,8 +4,10 @@ app.use(express.json())
 const port = 3000;
 require ('dotenv').config()
 const mongoose = require('mongoose')
+const connectDb = require('./config/db')
 const jwt = require('jsonwebtoken');
 const { register, login, prof } = require('./Controllers/authcontroller');
+const authroute = require("./Routes/authroutes")
 
 
 app.get('/', (req, res) => {
