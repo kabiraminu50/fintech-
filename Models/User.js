@@ -28,7 +28,12 @@ BVN:{
         select:false 
 
     },
+     balance:{
 
+        type:Number,
+        default:0
+
+},
     role:{
         type:String,
         required:true,

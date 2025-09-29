@@ -11,7 +11,7 @@ connectDb();
 const jwt = require('jsonwebtoken');
 
 
-app.use('/api/v1/auth',authroute)
+app.use('/api/v1/auth',authroute);
 
 
 app.get('/', (req, res) => {
