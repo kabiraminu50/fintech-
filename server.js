@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 const dotenv = require("dotenv")
-const authroute = require("./Routes/authroutes");
+const authroutes = require("./Routes/authroutes");
+const transferMoney = require("./Controllers/transfer")
 const port = 3000;
 require ('dotenv').config();
 const mongoose = require('mongoose');
@@ -11,7 +12,7 @@ connectDb();
 const jwt = require('jsonwebtoken');
 
 
-app.use('/api/v1/auth',authroute);
+app.use('/api/v1/auth',authroutes);
 
 
 app.get('/', (req, res) => {
