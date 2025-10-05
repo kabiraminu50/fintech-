@@ -44,7 +44,7 @@ if (amount >= 1000000){
     })
 }
 
-if (amount <= 50){
+if (amount <= 49){
     return res.status(400).json({
         success:false,
         message:"Minimum transfer amount is 50)"
@@ -57,12 +57,12 @@ if (amount <= 50){
 const charges = 20
 
 // deducting vaue from the sender
-sender.balance -= (amount+charges)
+sender.balance -= Number(amount+charges)
 await sender.save()
 
 
 // adding value to the receipient
-recipient.balance += amount
+recipient.balance += Number(amount)
 await recipient.save()
 
  // finding admin 
@@ -70,7 +70,7 @@ const admin = await User.findOne({role:"admin"})
 
 
 if (admin){
-    admin.balance += charges
+    admin.balance += Number(charges)
     await admin.save()
 }
 
