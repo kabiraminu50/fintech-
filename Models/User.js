@@ -31,7 +31,7 @@ BVN:{
      balance:{
 
         type:Number,
-        default:0
+        default:20000
 
 },
     role:{

@@ -2,14 +2,14 @@ const Transaction = require("../Models/Transaction");
  const User = require("../Models/User");
 const mongoose = require("mongoose")
 
- const transerMoney = async (req,res) => {
+ const transferMoney = async (req,res) => {
 try{
-const {recipientId,amount} = req.body
+const {email,amount} = req.body
 
 const senderId = req.user._id;
 // find sender and recipient
-const sender = await User.findById(senderId);
-const recipient = await User.findById(recipientId)
+const sender = await User.findOne({email})
+const recipient = await User.findOne({email})
 
 if (!sender || !recipient){
  return   res.status(400).json({
@@ -27,7 +27,7 @@ if (sender.balance < amount){
 }
 // preventing recipient to transfer to him self
 
-if (recipient._id.toString() === senderId.toString()){
+if (recipient === sender){
     
     return res.status(400).json({
         success:false,
@@ -95,4 +95,4 @@ catch(err){
 }
  };
 
- module.exports = {transerMoney}
+ module.exports = {transferMoney}
