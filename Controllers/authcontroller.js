@@ -83,7 +83,7 @@ if (!user){
     }
     catch(err){
 res.status(500).json({
- message:"something whent wrong"   
+ message:err.message   
 })
     }
 
@@ -96,12 +96,12 @@ const prof = async (req, res) => {
     try{
         const id = req.user.id 
         
-        const user = await User.findByid(id).select("-password");// hide password
+        const user = await User.findById(id).select("-password");// hide password
 if (!user){
     
     return res.status(400).json({
         success:false,
-        message:"user not found"
+        message:"user not found" 
     });
 }
        return res.status(200).json({

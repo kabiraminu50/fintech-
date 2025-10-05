@@ -14,7 +14,8 @@ const recipient = await User.findById(recipientId)
 if (!sender || !recipient){
  return   res.status(400).json({
         success:false,
-        message:"sender or recipient not found"
+        message:"sender or recipient not found",
+        
     })
 }
 
