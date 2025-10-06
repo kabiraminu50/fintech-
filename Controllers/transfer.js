@@ -27,11 +27,11 @@ if (sender.balance < amount){
 }
 // preventing recipient to transfer to him self
 
-if (recipient === sender){
+if (recipient._id === sender._id){
     
     return res.status(400).json({
         success:false,
-        message:"invalid Transfer Types"
+        message:"invalid Transfer Type"
     })
 }
 
@@ -57,12 +57,15 @@ if (amount <= 49){
 const charges = 20
 
 // deducting vaue from the sender
-sender.balance -= Number(amount+charges)
+
+const transferAmount = Number(amount)
+console.log(typeof (sender.balance))
+sender.balance -= transferAmount + charges
 await sender.save()
 
 
 // adding value to the receipient
-recipient.balance += Number(amount)
+recipient.balance += amount
 await recipient.save()
 
  // finding admin 
@@ -70,7 +73,7 @@ const admin = await User.findOne({role:"admin"})
 
 
 if (admin){
-    admin.balance += Number(charges)
+    admin.balance += charges
     await admin.save()
 }
 
