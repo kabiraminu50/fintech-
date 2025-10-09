@@ -17,6 +17,10 @@ const transactionSchema = new mongoose.Schema({
     recipient:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
+    },
+    amount:{
+        type:String,
+        require:true
     }
    
 }, {timestamps:true})

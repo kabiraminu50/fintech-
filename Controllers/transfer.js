@@ -6,12 +6,12 @@ const mongoose = require("mongoose")
 try{
 const {email,amount} = req.body
 
-const senderId = req.user._id;
+const senderId = req.user.id;
 // find sender and recipient
-const sender = await User.findOne({email})
+const sender = await User.findById(req.user.id)
 const recipient = await User.findOne({email})
 
-if (!sender || !recipient){
+if (!sender|| !recipient){
  return   res.status(400).json({
         success:false,
         message:"sender or recipient not found",
@@ -27,7 +27,7 @@ if (sender.balance < amount){
 }
 // preventing recipient to transfer to him self
 
-if (recipient._id === sender._id){
+if (sender._id.toString() === recipient._id.toString()){
     
     return res.status(400).json({
         success:false,
@@ -65,7 +65,7 @@ await sender.save()
 
 
 // adding value to the receipient
-recipient.balance += amount
+recipient.balance += transferAmount
 await recipient.save()
 
  // finding admin 
