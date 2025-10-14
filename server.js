@@ -10,6 +10,8 @@ const mongoose = require('mongoose');
 const connectDb = require('./config/db');
 connectDb();
 const jwt = require('jsonwebtoken');
+const authmiddleware = require('./Middleware/authmiddleware');
+const { updateProfile } = require('./Controllers/userController');
 
 
 app.use('/api/v1/auth',authroutes);
@@ -19,7 +21,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-
+app.use('/api/v1/updateProfile',updateProfile)
 
 
 app.listen(port, () => {
